@@ -1,75 +1,30 @@
 # StockSage 📦
 
-**Graph-powered seasonal inventory replenishment for small shops.**
+**Seasonal inventory replenishment planning for small shops.**
 
-StockSage helps small businesses make smarter restocking decisions using seasonal demand, inventory levels, supplier relationships, lead times, and budget constraints.
+StockSage is a Streamlit dashboard that uses inventory, seasonal demand, supplier lead times, and budget limits to suggest reorder quantities.
 
 ## Features
 
+- Inventory dashboard with stock status and charts
 - Seasonal demand scenarios
-- Inventory dashboard
-- Reorder recommendations
-- Budget-aware replenishment planning
-- CSV inventory upload
-- FalkorDB graph connecting products, seasons, and suppliers
+- Reorder recommendations with priority levels
+- Budget-aware quantity planning
+- CSV inventory upload and recommendation export
+- Optional supplier lead-time feed
+- Optional AI assistant for inventory questions
+- Optional FalkorDB connection check and recommendation snapshot
 
-## Graph Data Model
+## FalkorDB Integration
 
-StockSage uses FalkorDB to represent inventory knowledge as a graph.
+StockSage can optionally connect to FalkorDB and save the latest recommendations as a JSON snapshot. The current version does not create or query product, season, or supplier graph nodes.
 
-**Nodes**
-- `Product` — product name and current stock
-- `Season` — seasonal demand scenario
-- `Supplier` — supplier name and delivery lead time
-
-**Relationships**
-- `(Product)-[:IN_DEMAND_DURING]->(Season)`
-- `(Product)-[:SUPPLIED_BY]->(Supplier)`
-
-This graph connects seasonal demand with product and supplier information to support replenishment planning.
-
-## Cypher Queries
-
-Example query to inspect the product–season–supplier graph:
-
-```cypher
-MATCH (a)-[r]->(b)
-RETURN a, r, b
-```
-
-Example query to find products associated with a seasonal demand scenario:
-
-```cypher
-MATCH (p:Product)-[:IN_DEMAND_DURING]->(s:Season)
-RETURN p, s
-```
-
-Example query to find each product's supplier:
-
-```cypher
-MATCH (p:Product)-[:SUPPLIED_BY]->(s:Supplier)
-RETURN p, s
-```
-
-These queries illustrate the graph structure. The application should be tested to confirm which queries it executes directly.
+The dashboard works without FalkorDB. Configure the connection with environment variables such as `FALKORDB_HOST` and, if needed, `FALKORDB_PORT`, `FALKORDB_USERNAME`, `FALKORDB_PASSWORD`, `FALKORDB_SSL`, and `FALKORDB_GRAPH`.
 
 ## Run Locally
 
-Requirements: Python 3.10 or later.
+The app uses sample inventory data by default. To upload your own inventory, use a CSV with the same columns as the sample table.
 
 ```bash
 python -m pip install -r requirements.txt
 python -m streamlit run app.py
-```
-
-Configure FalkorDB credentials using Streamlit secrets or environment variables before launching the application if required. Never commit credentials to GitHub.
-
-## Demo
-
-Add the link to the StockSage demo video here.
-
-## Project Status
-
-StockSage is an early-stage prototype. Future plans include conversational AI, natural-language inventory queries, and more advanced graph-powered recommendations.
-
-**Built solo for Graph Hacks.**
