@@ -1,5 +1,7 @@
 # StockSage 📦
 
+[▶️ **WATCH THE DEMO**](https://youtu.be/YXBl-WBM8Q0)
+
 **Seasonal inventory replenishment planning for small shops.**
 
 StockSage is a Streamlit dashboard that uses inventory, seasonal demand, supplier lead times, and budget limits to suggest reorder quantities.
@@ -28,3 +30,4 @@ The app uses sample inventory data by default. To upload your own inventory, use
 ```bash
 python -m pip install -r requirements.txt
 python -m streamlit run app.py
+```
