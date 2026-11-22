@@ -1,3 +1,6 @@
 streamlit
 pandas
-falkordb
+plotly
+requests
+redis
+openai
